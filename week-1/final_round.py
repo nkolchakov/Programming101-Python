@@ -91,28 +91,30 @@ def max_consecutive(items):
 
 print max_consecutive([1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 5])
 
-# Gas Stations
+# 6. Gas Stations
 
-# in progress
+
 def gas_stations(distance, tank_size, stations):
     road_fuel = [stations[0]]
-
+    stations_to_fill = []
     for i in range(1, len(stations)):
         road_fuel.append(stations[i] - stations[i - 1])
 
+    # distance between cities
     road_fuel.append(distance - stations[len(stations) - 1])
 
-    count = road_fuel[0]
-    for i in range(1, len(road_fuel) - 1):
-        if(count + road_fuel[i + 1] < tank_size):
-        	#count += road_fuel[i]
-        	print count
-        else:
-        	print stations[i-1]
-        	count = 0
-    print road_fuel
+    # calculate distance to every city
+    curr_res = road_fuel[0]
+    for i in range(1, len(road_fuel)):
+        curr_res += road_fuel[i]
+        if (curr_res > tank_size):
+            stations_to_fill.append(stations[i-1])
+            curr_res = road_fuel[i]
+
+    print stations_to_fill
 
 gas_stations(320, 90, [50, 80, 140, 180, 220, 290])
+gas_stations(390, 80, [70, 90, 140, 210, 240, 280, 350])
 
 # Sum all numbers in a given string
 
