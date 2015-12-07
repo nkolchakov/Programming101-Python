@@ -1,4 +1,3 @@
-
 # Sum of all digits of a number
 
 
