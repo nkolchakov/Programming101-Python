@@ -1,6 +1,5 @@
-
-# from firstday import palindrome
 from math import sqrt, floor
+import copy
 
 # 1.Is Number Balanced?
 
@@ -11,10 +10,8 @@ def is_number_balanced(n):
     for i in range(0, len(num_as_str) / 2):
         left_sum += int(num_as_str[i])
         right_sum += int(num_as_str[len(num_as_str) - 1 - i])
-    if left_sum == right_sum:
-        return True
-    else:
-        return False
+
+    return left_sum == right_sum
 
 print is_number_balanced(1238033)
 
@@ -45,7 +42,7 @@ print is_decreasing([100, 50, 20])
 
 def palindrome(obj):
     text = str(obj)
-    for i in xrange(0, len(text)):
+    for i in range(0, len(text)):
         if (text[i] != text[len(text) - 1 - i]):
             return False
     return True
@@ -92,7 +89,7 @@ prime_numbers(5)
 def create_dict_from_word(word):
     result = {}
     for ch in word:
-        if not result.has_key(ch):
+        if ch not in result:
             result[ch] = 1
         else:
             result[ch] += 1
@@ -118,10 +115,7 @@ print is_anagram("dsa", "ASD")
 
 
 def is_num_inside_tuple(n, tpl):
-    if (((n >= tpl[0]) and (n <= tpl[1]))):
-        return True
-    else:
-        return False
+    return ((n >= tpl[0]) and (n <= tpl[1]))
 
 
 def birthday_ranges(birthdays, ranges):
@@ -151,12 +145,58 @@ def sum_matrix(mtx):
     for i in range(0, rows):
         for j in range(0, cols):
             result += mtx[i][j]
-    print result
+    return result
 
 
-sum_matrix([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]])
+print sum_matrix([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]])
+
+
+# 8. Bombing matrix
+
+def within_bounds(mtx, coords, check):
+    if (coords[0] + check[0]) < 0 or (coords[0] + check[0]) > (len(mtx) - 1):
+        return False
+    if (coords[1] + check[1]) < 0 or (coords[1] + check[1]) > (len(mtx[1]) - 1):
+        return False
+    return True
+
+
+def do_bombing(mtx, curr_coord, value):
+    combo = [-1, 0, 1]
+    copy_mtx = copy.deepcopy(mtx)
+    x = curr_coord[0]
+    y = curr_coord[1]
+    for i in range(0, len(combo)):
+        for j in range(0, len(combo)):
+            add_x = combo[i]
+            add_y = combo[j]
+            if not (add_x == 0 and add_y == 0):
+                if within_bounds(mtx, curr_coord, [add_x, add_y]):
+                    copy_mtx[x + add_x][add_y + y] -= min(
+                        value, mtx[x + add_x][add_y + y])
+    return sum_matrix(copy_mtx)
+
+
+def bombing_matrix(mtx):
+    result = {}
+    for row in range(0, len(mtx)):
+        for col in range(0, len(mtx[0])):
+            cell_value = mtx[row][col]
+            bomb_res = do_bombing(mtx, [row, col], cell_value)
+            result[(row, col)] = bomb_res
+
+    return result
+
+mtx = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+print bombing_matrix(mtx)
 
 # 9.Transversal
 
 
+def is_transversal(transversal, family):
+    for tr_set in family:
+        if len(set(transversal) - set(tr_set)) == len(transversal):
+            return False
+    return True
 
+print is_transversal([2, 3, 4], [[1, 7], [2, 3, 5], [4, 8]])
