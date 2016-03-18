@@ -7,13 +7,13 @@ import copy
 def is_number_balanced(n):
     num_as_str = str(n)
     left_sum, right_sum = 0, 0
-    for i in range(0, len(num_as_str) / 2):
+    for i in range(0, len(num_as_str) // 2):
         left_sum += int(num_as_str[i])
         right_sum += int(num_as_str[len(num_as_str) - 1 - i])
 
     return left_sum == right_sum
 
-print is_number_balanced(1238033)
+print (is_number_balanced(1238030))
 
 # 2.Increasing and Decreasing Sequences
 
@@ -24,7 +24,7 @@ def is_increasing(seq):
             return False
     return True
 
-print is_increasing([1, 1, 1, 1])
+print (is_increasing([1, 1, 1, 1]))
 
 # 2.2 Descreasing sequence?
 
@@ -35,7 +35,7 @@ def is_decreasing(seq):
             return False
     return True
 
-print is_decreasing([100, 50, 20])
+print (is_decreasing([100, 50, 20]))
 
 # 3. Largest Palindrome
 
@@ -56,8 +56,8 @@ def get_largest_palindrome(n):
         else:
             num -= 1
 
-print get_largest_palindrome(994687)
-print get_largest_palindrome(99)
+print (get_largest_palindrome(994687))
+print (get_largest_palindrome(99))
 
 # 4. Prime Numbers
 
@@ -79,9 +79,9 @@ def prime_numbers(n):
         if all_num[i] is True:
             result.append(i)
 
-    print result
+    return result
 
-prime_numbers(5)
+print (prime_numbers(5))
 
 # 5. Anagrams
 
@@ -109,7 +109,7 @@ def is_anagram(a, b):
 
     return first_dict == second_dict
 
-print is_anagram("dsa", "ASD")
+print (is_anagram("dsa", "ASD"))
 
 # 6. Birthday Ranges
 
@@ -130,9 +130,9 @@ def birthday_ranges(birthdays, ranges):
     return result
 
 
-print birthday_ranges([1, 2, 3, 4, 5], [(1, 2), (1, 3), (1, 4), (1, 5), (4, 6)])
+print (birthday_ranges([1, 2, 3, 4, 5], [(1, 2), (1, 3), (1, 4), (1, 5), (4, 6)]))
 
-print birthday_ranges([5, 10, 6, 7, 3, 4, 5, 11, 21, 300, 15], [(4, 9), (6, 7), (200, 225), (300, 365)])
+print (birthday_ranges([5, 10, 6, 7, 3, 4, 5, 11, 21, 300, 15], [(4, 9), (6, 7), (200, 225), (300, 365)]))
 
 # 7. Sum Numbers in Matrix
 
@@ -148,7 +148,7 @@ def sum_matrix(mtx):
     return result
 
 
-print sum_matrix([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]])
+print (sum_matrix([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]]))
 
 
 # 8. Bombing matrix
@@ -188,7 +188,7 @@ def bombing_matrix(mtx):
     return result
 
 mtx = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-print bombing_matrix(mtx)
+print (bombing_matrix(mtx))
 
 # 9.Transversal
 
@@ -199,4 +199,4 @@ def is_transversal(transversal, family):
             return False
     return True
 
-print is_transversal([2, 3, 4], [[1, 7], [2, 3, 5], [4, 8]])
+print (is_transversal([2, 3, 4], [[1, 7], [2, 3, 5], [4, 8]]))

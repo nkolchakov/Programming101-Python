@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Create new course</title>
+	</head>
+	<body>
+		<form action="" method="POST">
+			{% csrf_token %}
+			<label for="">Course Name: </label>
+			<input type="text" name="name">
+			<br/>
+			<label for="">Description: </label>
+			<input type="text" name="descr">
+			<br>
+			<p>
+				{YYYY-mm-dd} format
+			</p>
+			<label for="">Start Date: </label>
+			<input type="text" name="start_date">
+			<br>
+			<label for="">End Date: </label>
+			<input type="text" name="end_date">
+			<br>
+			<input name='create_course' value='Create' type="submit" >
+		</form>
+	</body>
+</html>

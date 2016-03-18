@@ -18,12 +18,11 @@ print (sum_of_digits(1325132435356))
 def to_digits(n):
     num_as_str = str(n)
     digits_array = []
-    print(num_as_str)
 
     for c in num_as_str:
         digits_array.append(int(c))
 
-    print digits_array
+    return digits_array
 
 print (to_digits(12312))
 
@@ -53,8 +52,6 @@ def to_number(digits):
     for num in digits:
         multiplicator = power_of_ten(digits[index::])
         result += num * 10**multiplicator
-        print "multiplicator " + str(multiplicator)
-        print result
         index += 1
 
     return result
@@ -65,7 +62,6 @@ print (to_number([22, 5, 13]))
 def factorial(n):
     if (n == 1):
         return 1
-
     return n * factorial(n - 1)
 
 
@@ -97,7 +93,7 @@ def fibonacci(n):
 
     return sequence
 
-print fibonacci(7)
+print (fibonacci(7))
 # a, b = 1,1
 # a, b = b, a + b
 
@@ -119,14 +115,12 @@ print (fib_number(10))
 
 def palindrome(obj):
     text = str(obj)
-    for i in xrange(0, len(text)): 
+    for i in range(0, len(text)):
         if (text[i] != text[len(text) - 1 - i]):
             return False
-
-
     return True
 
-print palindrome("kapsdpak")
+print (palindrome("kapsdpak"))
 
 # count vowels in a string
 
@@ -143,7 +137,7 @@ def count_vowels(word):
                 continue
     return count
 
-print count_vowels("Github is the second best thing that happend to programmers, after the keyboard!")
+print (count_vowels("Github is the second best thing that happend to programmers, after the keyboard!"))
 
 # count consonants
 #  B, C, D, F, G, H, J, K, L, M, N, P, Q, R, S, T, V, W, X,Z
@@ -164,7 +158,7 @@ def check_consonats(word):
 
     return count
 
-print check_consonats("Github is the second best thing that happend to programmers, after the keyboard!")
+print (check_consonats("Github is the second best thing that happend to programmers, after the keyboard!"))
 
 # char histogram
 
@@ -172,7 +166,7 @@ print check_consonats("Github is the second best thing that happend to programme
 def char_histogram(sequence):
     histogram = {}
     for el in sequence:
-        if (not histogram.has_key(el)):
+        if el not in histogram:
             histogram[el] = 1
         else:
             histogram[el] += 1

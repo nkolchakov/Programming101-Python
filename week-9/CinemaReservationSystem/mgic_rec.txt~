@@ -1,0 +1,82 @@
+import sqlite3
+from CLI import CLI
+
+
+def load_db(db_name):
+    conn = sqlite3.connect(db_name)
+    c = conn.cursor()
+
+    # tbl = """CREATE TABLE IF NOT EXISTS movies
+    #         (
+    #             movie_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    #             movie_name VARCHAR(100) NOT NULL,
+    #             movie_rating REAL
+    #         );
+    #         """
+    # tbl2 = """CREATE TABLE IF NOT EXISTS projections
+    #          (
+    #             proj_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    #             proj_movie_id INTEGER,
+    #             proj_type VARCHAR(10) NOT NULL,
+    #             proj_date VARCHAR(20) NOT NULL,
+    #             proj_time VARCHAR(20) NOT NULL,
+    #             FOREIGN KEY(proj_movie_id) REFERENCES movies(movie_id)
+    #          );"""
+    # tbl3 = """
+    #          CREATE TABLE IF NOT EXISTS reservations
+    #          (
+    #             res_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    #             res_username VARCHAR(80) NOT NULL,
+    #             proj_id INTEGER,
+    #             res_row INTEGER NOT NULL,
+    #             res_col INTEGER NOT NULL,
+    #             FOREIGN KEY(proj_id) REFERENCES projections(proj_id)
+    #          );"""
+    # tbl1_insert = """
+    #             INSERT INTO movies(movie_name, movie_rating) VALUES
+    #             ("The Hunger Games: Catching Fire", 7.9),
+    #             ("Wreck-It Ralph", 7.8),
+    #             ("Her", 8.3);
+    # """
+    # tbl2_insert = """
+    #             INSERT INTO projections(proj_movie_id, proj_type, proj_date, proj_time) 
+    #             VALUES
+    #             (1, "3D", "2014-04-01", "19:10"),
+    #             (1, "2D", "2014-04-01", "19:00"),
+    #             (1, "4DX", "2014-04-02", "21:00"),
+    #             (3, "2D", "2014-04-05", "20:20"),
+    #             (2, "3D", "2014-04-02", "22:00"),
+    #             (2, "2D", "2014-04-02", "19:30");
+    # """
+    # tbl3_insert = """
+    #             INSERT INTO reservations(res_username,proj_id,res_row,res_col) 
+    #             VALUES
+    #             ("RadoRado",1,2,1),
+    #             ("RadoRado",1,3,5),
+    #             ("RadoRado",1,7,8),
+    #             ("Ivo",3,1,1),
+    #             ("Ivo",3,1,2),
+    #             ("Mysterious",5,2,3),
+    #             ("Mysterious",5,2,4);
+    # """
+    # c.execute(tbl)
+    # c.execute(tbl2)
+    # c.execute(tbl3)
+    # c.execute(tbl1_insert)
+    # c.execute(tbl2_insert)
+    # c.execute(tbl3_insert)
+    # conn.commit()
+
+
+def show_movies():
+    pass
+
+
+def main():
+    # load_db("cinema.db")
+    interface = CLI()
+    interface.start()
+
+if __name__ == '__main__':
+    main()
+

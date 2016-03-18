@@ -1,0 +1,138 @@
+import sqlite3
+import re
+
+
+class CLI:
+
+    conn = sqlite3.connect("cinema.db")
+    c = conn.cursor()
+
+    def __init__(self):
+        pass
+
+    #def get_movie_name_by_id(self, mov_id):
+    #    sql = """SELECT movie_name
+    #             FROM movies
+    #             WHERE movie_id = ?;
+    #    """
+    #    CLI.c.execute(sql, (mov_id, ))
+    #    return CLI.c.fetchone()
+
+    #def get_movie_time_and_type_by_id(self, proj_id):
+    #    sql = """SELECT proj_date || " " || proj_time || " " || proj_type
+    #             FROM projections
+    #             WHERE proj_id = ?;
+    #    """
+    #    CLI.c.execute(sql, (proj_id, ))
+    #    return CLI.c.fetchone()
+
+    #def show_current_movies(self):
+    #    sql = """SELECT "[" || m.movie_id || "] - " || m.movie_name || " " || m.movie_rating
+    #    FROM movies m
+    #    ORDER BY movie_rating DESC;"""
+    #    CLI.c.execute(sql)
+    #    return CLI.c.fetchall()
+
+    #def show_movie_projections(self, movie_id):
+    #    sql = """SELECT "[" || proj_id || "] - " || proj_date || " " || proj_time ||
+    #                        " " || proj_type
+    #             FROM projections
+    #             WHERE proj_movie_id = ?;
+    #    """
+    #    CLI.c.execute(sql, (movie_id, ))
+    #    return CLI.c.fetchall()
+
+    #def add_reservation_to_db(self, total_tickets, username, projection_id, row_col):
+    #    for i in range(0, total_tickets):
+    #        sql = """INSERT INTO reservations(res_username,proj_id,res_row,res_col)
+    #            VALUES
+    #            (?,?,?,?);
+    #        """
+    #        row = row_col[i][0]
+    #        col = row_col[i][1]
+    #        CLI.c.execute(sql, (username, projection_id, row, col))
+    #    CLI.conn.commit()
+
+    def print_matrix(self, mtx):
+        print ("\n")
+        size = len(mtx[1])
+        for i in range(0, size):
+            for j in range(0, size):
+                print(mtx[i][j], end=" ")
+            print ("\n")
+
+    def taken_seats(self, projection):
+        sql = """SELECT res_row, res_col
+                 FROM reservations
+                 WHERE proj_id = ?;
+        """
+        CLI.c.execute(sql, (projection, ))
+        taken_seats = CLI.c.fetchall()
+        return taken_seats
+
+    def show_availible_seats(self, projection_for):
+        all_seats = [['.' for x in range(10)] for x in range(10)]
+        taken_seats = self.taken_seats(projection_for)
+        for ts in taken_seats:
+            all_seats[ts[0]][ts[1]] = "X"
+        self.print_matrix(all_seats)
+
+    
+
+    def start(self):
+        name = input("Step 1 (User): Choose name>") or None
+        num_of_tickets = int(input("Step 1 (User): Choose number of tickets>") or 0)
+
+        for row in self.show_current_movies():
+            print (row)
+
+        chosen_movie_id = input("Step 2 (Movie): Choose a movie>")
+        movies = self.show_movie_projections(chosen_movie_id)
+
+        for row in movies:
+            print (row)
+
+        chosen_projection = input("Step 3 (Projection): Choose a projection>")
+        self.show_availible_seats(chosen_projection)
+        taken_seats = self.taken_seats(chosen_projection)  # tuples
+        tickets = 0
+        taken_seats_copy = taken_seats
+
+        while True:
+            if tickets == num_of_tickets:
+                break
+            chosen_seat = input("Step 4 (Seats): Choose seat 1>")
+            seats_list = eval(chosen_seat)
+            if (seats_list in taken_seats):
+                print ("This seat is already taken!")
+            elif(seats_list[0] > 10 or seats_list[0] < 0 or
+                 seats_list[1] > 10 or seats_list[1] < 0):
+                print ("LOL... no")
+            else:
+                tickets += 1
+                taken_seats_copy.append(seats_list)
+
+        taken_seats = taken_seats_copy
+        print ("This is your reservation: ")
+
+        movie_name = self.get_movie_name_by_id(chosen_movie_id)
+        print ("Movie: {}".format(movie_name))  # take movie name by id
+
+        movie_time_type = self.get_movie_time_and_type_by_id(chosen_projection)
+        print ("Date and Time: {}".format(movie_time_type))  # take by id
+
+        print ("Seats: ", end=" ")
+        for i in range(len(taken_seats_copy) - num_of_tickets, len(taken_seats_copy)):
+            print (taken_seats_copy[i], end=" ")
+        print ('\n')
+
+        last_step = input("Step 5 (Confirm - type 'finalize') >")
+        finished_reservation = False
+        if last_step.lower() == "finalize":
+            print ("Thanks.")
+            finished_reservation = True
+        if finished_reservation:
+            #  last appended tickets-tickets which are reserved current seesion
+            self.add_reservation_to_db(num_of_tickets, name,
+            chosen_projection, taken_seats_copy[(len(taken_seats_copy)-num_of_tickets)::])
+
